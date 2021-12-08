@@ -1,10 +1,16 @@
 package com.example.tipcalculator; //anything
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.KeyEvent;
+import android.view.View;
 import android.view.inputmethod.EditorInfo;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -21,10 +27,16 @@ public class MainActivity extends AppCompatActivity {
     private RadioButton radioParty;
     private EditText editParty;
 
+    ConstraintLayout layout;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        initcolorChanger();
+
+        layout = findViewById(R.id.layout);
 
         textBarLabel = findViewById(R.id.textBarLabel);
         initSeekBar();
@@ -121,5 +133,37 @@ public class MainActivity extends AppCompatActivity {
     }
 
 }
+
+    private void initcolorChanger() {
+        Button changeColor = findViewById(R.id.ChangeColorButton);
+        changeColor.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this, ColorActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
+            }
+        });
+    }
+
+    public void onResume() {
+        super.onResume();
+        SharedPreferences sharedPref = getSharedPreferences("MyContactListPreferences", Context.MODE_PRIVATE);
+        int colorHolder = sharedPref.getInt("colorGroup", 0xFF0000FF);
+        int colorHolder2 = sharedPref.getInt("colorGroup", 0xFF00FF00);
+        int colorHolder3 = sharedPref.getInt("colorGroup", 0xFFFF0000);
+        int colorHolder4 = sharedPref.getInt("colorGroup", 0xFFFFFF00);
+
+        if (colorHolder == (0xFF00FF00)) {
+            layout.setBackgroundColor(colorHolder);
+        } else if (colorHolder2 == (0xFF00FF00)) {
+            layout.setBackgroundColor(colorHolder2);
+        } else if (colorHolder3 == (0xFFFF0000)) {
+            layout.setBackgroundColor(colorHolder3);
+        } else {
+            layout.setBackgroundColor(colorHolder4);
+        }
+    }
+
 
 }

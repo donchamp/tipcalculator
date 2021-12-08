@@ -10,6 +10,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.TipCalculator">
         <activity
+            android:name=".ColorActivity"
+            android:exported="true" />
+        <activity
+            android:name=".coloractivity"
+            android:exported="true" />
+        <activity
             android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
